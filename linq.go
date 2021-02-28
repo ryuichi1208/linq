@@ -39,6 +39,11 @@ type withGoroutineID struct {
 	out io.Writer
 }
 
+func (u *Url) UrlListInit(filename string) error {
+	_, err := os.Stat(filename)
+	return err
+}
+
 func (w *withGoroutineID) Write(p []byte) (int, error) {
 	firstline := []byte(strings.SplitN(string(debug.Stack()), "\n", 2)[0])
 	return w.out.Write(append(firstline[:len(firstline)-10], p...))
@@ -78,6 +83,10 @@ func worker(ch <-chan string, id int, cli *http.Client, ctx context.Context) err
 				if err != nil {
 					return err
 				}
+				defer func() {
+					io.Copy(ioutil.Discard, resp.Body)
+					resp.Body.Close()
+				}()
 				log.Printf("%d: %s", resp.StatusCode, url)
 			} else {
 				return nil
