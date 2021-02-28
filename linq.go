@@ -88,7 +88,7 @@ func worker(ch <-chan string, id int, cli *http.Client, ctx context.Context) err
 }
 
 func workerSingleFlyght(ch <-chan string, id int, cli *http.Client) {
-	return
+	// return
 }
 
 func main() {
@@ -104,7 +104,7 @@ An example of customizing usage output
 		fmt.Fprintf(os.Stderr, "%s\n", usageTxt)
 	}
 
-	sig := make(chan os.Signal)
+	sig := make(chan os.Signal, 2)
 	signal.Notify(sig, os.Interrupt, syscall.SIGTERM)
 
 	urls := readYaml(*fileName)
