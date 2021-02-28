@@ -17,6 +17,8 @@ import (
 	"syscall"
 	"time"
 
+	"linq/cmd"
+
 	. "github.com/logrusorgru/aurora/v3"
 	"golang.org/x/sync/errgroup"
 	"gopkg.in/yaml.v3"
@@ -105,7 +107,7 @@ An example of customizing usage output
 	}
 
 	sig := make(chan os.Signal, 2)
-	signal.Notify(sig, os.Interrupt, syscall.SIGTERM)
+	signal.Notify(sig, syscall.SIGTERM, os.Interrupt)
 
 	urls := readYaml(*fileName)
 
@@ -158,4 +160,5 @@ An example of customizing usage output
 	if err := eg.Wait(); err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(cmd.CommandNameUsage())
 }
