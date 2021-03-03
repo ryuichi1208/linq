@@ -13,6 +13,7 @@ type Human struct {
 	name string
 	age  int
 	list *[]List
+	l    []*LL
 }
 
 func ListChanged(l *[]List) {

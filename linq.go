@@ -84,7 +84,9 @@ func worker(ch <-chan string, id int, cli *http.Client, ctx context.Context) err
 					return err
 				}
 				defer func() {
-					io.Copy(ioutil.Discard, resp.Body)
+					if _, err := io.Copy(ioutil.Discard, resp.Body); err != nil {
+						log.Fatal("io error", err)
+					}
 					resp.Body.Close()
 				}()
 				log.Printf("%d: %s", resp.StatusCode, url)
