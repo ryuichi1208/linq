@@ -19,10 +19,10 @@ jobs:
         go-version: 1.15
 
     - name: Build
-      run: go build -v ./...
+      run: go build -v ./linq.go
 
     - name: Test
-      run: go test -v ./...
+      run: go test -v ./
 
     - name: Bench Test
       run: go test -bench . -benchmem
